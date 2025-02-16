@@ -10,6 +10,6 @@ router.get("/", (req, res)=>{
     res.status(200).json({ type: "success", message: "This is the root end point of Pearl Softech Backend", payload: null });
 })
 .post("/login", login)
-.post("/business-main", businessMail)
+.post("/business-mail", businessMail)
 
 export default router;
