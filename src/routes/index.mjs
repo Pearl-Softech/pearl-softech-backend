@@ -1,7 +1,7 @@
 import express from "express";
 import { checkAPIKey } from "../controllers/apiPolice.mjs";
-import { verifyJWT } from "../controllers/jwt.mjs";
 import { businessMail, login } from "../controllers/index.mjs";
+import { addBlog, deleteBlog, getBlog, getBlogs, updateBlog } from "../controllers/blog.mjs";
 
 const router = express.Router();
 
@@ -11,5 +11,10 @@ router.get("/", (req, res)=>{
 })
 .post("/login", login)
 .post("/business-mail", businessMail)
+.get("/get-blogs", getBlogs)
+.get("/get-blog/:id", getBlog)
+.post("/add-blog", addBlog)
+.delete("/delete-blog/:id", deleteBlog)
+.put("/update-blog/:id", updateBlog)
 
 export default router;
