@@ -13,15 +13,15 @@ const getBlogs = async (req, res) => {
 const getBlog = async (req, res) => {
     const { id } = await req.params;
 
-    try {
+    //try {
         let blog = await Blog.findById(id);
-        if (!blog) {
-            return res.status(404).json({ type: "error", message: 'Blog not found' });
-        }
+        //if (!blog) {
+            //return res.status(404).json({ type: "error", message: 'Blog not found' });
+        //}
         return res.status(200).json({ type: "success", blog });
-    } catch (err) {
-        return res.status(500).json({ type: "error", message: 'Server error: Please try again later or contact devrajeshthapa@gmail.com to resolve this issue' });
-    }
+    //} catch (err) {
+        //return res.status(500).json({ type: "error", message: 'Server error: Please try again later or contact devrajeshthapa@gmail.com to resolve this issue' });
+    //}
 }
 
 
