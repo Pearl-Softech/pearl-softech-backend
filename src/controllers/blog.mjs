@@ -83,12 +83,23 @@ const updateBlog = async (req, res) => {
         }
 
         // Send success response with updated blog
-        res.status(200).json({ message: "Blog updated successfully", blog: updatedBlog });
+        return res.status(200).json({ message: "Blog updated successfully", blog: updatedBlog });
 
     } catch (error) {
         console.error("Error updating blog:", error);
-        res.status(500).json({ message: "Server error. Please try again later." });
+        return res.status(500).json({ message: "Server error. Please try again later." });
     }
 };
 
-export { getBlogs, getBlog, addBlog, deleteBlog, updateBlog };
+const incrementViews = async (req, res) => {
+    const { id } = await req.params;
+
+    try {
+        let blog = await Blog.findById(id);
+        await Blog.findByIdAndUpdate(id, { views: blog.view + 1 });
+    } catch (err) {
+        return res.status(500).json({ message: "Server error. Please try again later." });
+    }
+}
+
+export { getBlogs, getBlog, addBlog, deleteBlog, updateBlog, incrementViews };

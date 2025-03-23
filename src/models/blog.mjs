@@ -15,6 +15,11 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    views:{
+      type: Number,
+      default: 0,
+      required: false
+    }
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
