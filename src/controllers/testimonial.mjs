@@ -1,3 +1,5 @@
+import Testimonial from '../models/testimonial.mjs'
+
 const addTestimonial = async (req, res) => {
     try {
       const testimonial = new Testimonial(req.body);
