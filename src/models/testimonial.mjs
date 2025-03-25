@@ -20,7 +20,7 @@ const testimonialSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  email: {
+  companyEmail: {
     type: String,
     required: true,
     lowercase: true,
