@@ -29,7 +29,7 @@ const careerSchema = new mongoose.Schema({
 
   tags: {
     type: [String],
-    enum: ['Software Development', 'Digital Marketing', 'Web Development'],
+    enum: ['Software Development', 'Digital Marketing', 'Web Development', 'UI/UX'],
     default: [],
   },
 
