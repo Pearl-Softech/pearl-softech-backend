@@ -2,7 +2,7 @@ import Career from "../models/career.mjs";
 
 const getCareers = async (req, res) => {
     try {
-        const careers = await Career.find();
+        const careers = await Career.find().sort({ createdAt: -1 }); // Sort by createdAt in descending order
         return res.status(200).json({ type: "success", careers });
     } catch (err) {
         console.error(err);
@@ -12,6 +12,7 @@ const getCareers = async (req, res) => {
         });
     }
 };
+
 
 const getCareer = async (req, res) => {
     const { id } = req.params;

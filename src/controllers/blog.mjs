@@ -2,13 +2,14 @@ import Blog from "../models/blog.mjs";
 
 const getBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find(); // Fetch all blogs from the database
+        const blogs = await Blog.find().sort({ createdAt: -1 }); // Sort by date in descending order
         return res.status(200).json({ type: "success", blogs });
     } catch (err) {
         console.error(err); // Log the error for debugging
         return res.status(500).json({ type: "error", message: 'Server error: Please try again later or contact devrajeshthapa@gmail.com to resolve this issue' });
     }
 };
+
 
 const getBlog = async (req, res) => {
     const { id } = await req.params;
