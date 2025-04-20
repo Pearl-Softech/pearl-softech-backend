@@ -19,13 +19,29 @@ app.use((req, res, next) => {
 // Enable CORS for all routes (move to top)
 app.use(cors({
     origin: ['https://pearlsoftech.com', 'https://admin.pearlsoftech.com'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Api-Key'],
 }));
 
 // Allow preflight OPTIONS request handling for all routes
 app.options('*', cors());
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// 4. ✅ CORS debug logger middleware (place here)
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    if (req.method === 'OPTIONS') {
+      console.log('OPTIONS response headers:', res.getHeaders());
+    }
+  });
+  next();
+});
+
+// 5. ✅ Log incoming requests (optional)
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
