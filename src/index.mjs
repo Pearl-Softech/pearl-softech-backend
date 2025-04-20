@@ -13,8 +13,8 @@ const app = express();
 // Enable CORS for all routes (move to top)
 app.use(cors({
     origin: '*', // Allow all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow specific HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-API-Key'], // Allow specific headers
+    methods: '*', // Allow specific HTTP methods
+    allowedHeaders: '*', // Allow specific headers
 }));
 
 // Allow preflight OPTIONS request handling for all routes
