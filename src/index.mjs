@@ -11,7 +11,7 @@ const app = express();
 
 // ✅ Define CORS config once and reuse
 const corsOptions = {
-  origin: "https://admin.pearlsoftech.com",
+  origin: ["https://admin.pearlsoftech.com", "https://pearlsoftech.com"]
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [
     "Content-Type",
