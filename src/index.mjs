@@ -1,7 +1,6 @@
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
-
 import router from "./routes/index.mjs";
 import { connectMongoDB } from "./connections/index.mjs";
 
@@ -10,21 +9,27 @@ connectMongoDB("mongodb://127.0.0.1:27017/pearl-softech");
 
 const app = express();
 
-// Enable CORS for all routes (move to top)
-app.use(cors({
-    origin: 'https://admin.pearlsoftech.com',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow specific HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-API-Key'], // Allow specific headers, including X-API-Key
-}));
+// ✅ Define CORS config once and reuse
+const corsOptions = {
+  origin: "https://admin.pearlsoftech.com",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "X-API-Key",
+  ],
+};
 
-// Allow preflight OPTIONS request handling for all routes
-app.options('*', cors()); 
+// ✅ Apply CORS for all routes and preflight
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 app.use("/", router);
 
 app.listen(PORT, () => {
-    console.log(`Server started listening at PORT ${PORT}`);
+  console.log(`Server started listening at PORT ${PORT}`);
 });
