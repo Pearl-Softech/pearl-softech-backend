@@ -97,7 +97,7 @@ const incrementViews = async (req, res) => {
 
     try {
         let blog = await Blog.findById(id);
-        await Blog.findByIdAndUpdate(id, { views: blog.views + 1 });
+        return await Blog.findByIdAndUpdate(id, { views: blog.views + 1 });
     } catch (err) {
         return res.status(500).json({ message: "Server error. Please try again later." });
     }
