@@ -12,9 +12,9 @@ const app = express();
 
 // Enable CORS for all routes (move to top)
 app.use(cors({
-    origin: '*', // Allow all origins
-    methods: '*', // Allow specific HTTP methods
-    allowedHeaders: '*', // Allow specific headers
+    origin: ['pearlsoftech.com', 'admin.pearlsoftech.com'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Api-Key'],
 }));
 
 // Allow preflight OPTIONS request handling for all routes
