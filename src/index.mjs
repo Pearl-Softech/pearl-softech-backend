@@ -6,32 +6,34 @@ import router from "./routes/index.mjs";
 import { connectMongoDB } from "./connections/index.mjs";
 
 const PORT = process.env.PORT || 8080;
+
+// Connect to MongoDB
 connectMongoDB("mongodb://127.0.0.1:27017/pearl-softech");
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
-
-// Enable CORS for all routes (move to top)
+// ✅ 1. CORS Middleware — must be before routes
 app.use(cors({
-    origin: ['https://pearlsoftech.com', 'https://admin.pearlsoftech.com'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Api-Key'],
+  origin: ['https://pearlsoftech.com', 'https://admin.pearlsoftech.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Api-Key'],
 }));
 
-// Allow preflight OPTIONS request handling for all routes
-app.options('*', cors());
+// ✅ 2. OPTIONS Preflight Handler
+app.options('*', (req, res) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || '*');
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Api-Key");
+  res.sendStatus(200);
+});
 
+// ✅ 3. Log All Requests
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
-// 4. ✅ CORS debug logger middleware (place here)
+// ✅ 4. Log OPTIONS response headers (for debug)
 app.use((req, res, next) => {
   res.on('finish', () => {
     if (req.method === 'OPTIONS') {
@@ -41,16 +43,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// 5. ✅ Log incoming requests (optional)
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
+// ✅ 5. Body Parsers
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// ✅ 6. Main Routes
 app.use("/", router);
 
+// ✅ 7. Start Server
 app.listen(PORT, () => {
-    console.log(`Server started listening at PORT ${PORT}`);
+  console.log(`Server started listening at PORT ${PORT}`);
 });
