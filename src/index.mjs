@@ -10,12 +10,6 @@ connectMongoDB("mongodb://127.0.0.1:27017/pearl-softech");
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
-
 // Enable CORS for all routes (move to top)
 app.use(cors({
     origin: ['https://pearlsoftech.com', 'https://admin.pearlsoftech.com'],
